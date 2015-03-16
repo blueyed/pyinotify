@@ -356,7 +356,11 @@ class SysCtlINotify:
     value = property(get_val, set_val)
 
     def __repr__(self):
-        return '<%s=%d>' % (self._attrname, self.get_val())
+        try:
+            val = self.get_val()
+        except OSError, e:
+            return '<%s=[%s]>' % (self._attrname, e)
+        return '<%s=%d>' % (self._attrname, val)
 
 
 # Inotify's variables
